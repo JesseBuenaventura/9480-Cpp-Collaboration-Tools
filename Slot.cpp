@@ -90,10 +90,30 @@ void reserveSlot(vector<Slot>& slots){
 }
 
 int main(){
+    string userName = "cool";
+    string password = "mo";
+    string user;
+    string pass;
+    bool loggedIn = false;
+
+    cout << "Hello, Welcome to ParkRes!" << endl;
+    cout << "Enter your Username: ";
+    cin >> user;
+    if (user == userName){
+        cout << "Enter your Password: ";
+        cin >> pass;
+        if (pass == password){
+            cout << "Successfully Login!" << endl;
+            loggedIn = true;
+        } else  {
+            cout << "INCORRECT Username or Password! Try Again!" << endl;
+        }
+    }
+
 vector<Slot> slots = initializeSlots(10);
 int choice;
 
-    while(true) {
+    while(loggedIn) {
         cout << "\n----Choose an option----" << endl;
         cout << "1. View Available Slots" << endl;
         cout << "2. View my Reservations" << endl;
@@ -135,8 +155,9 @@ int choice;
             cout << "Cancel Reservation" << endl;
             break;
         case 4:
-            cout << "Exiting the application" << endl;
-            return 0;
+            cout << "Logging Out" << endl;
+            loggedIn = false;
+            break;
         default:
             cout << "Invalid input. Please enter a valid choice." << endl;
         }
