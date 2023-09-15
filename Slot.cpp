@@ -1,6 +1,7 @@
 #include <iostream> //input and output stream
 #include <string>
 #include <vector>
+#include <limits>
 using namespace std;
 
 struct Slot
@@ -44,9 +45,19 @@ void reserveSlot(vector<Slot>& slots){
     } else {
 
         // TO DO: Check if student id is valid 
-        cout << "School ID Number:" << endl;
+        cout << "School ID Number: ";
         int idNumber;
-        cin >> idNumber;
+        while (true) {
+            cin >> idNumber;
+            if (!cin) {
+                cout << "Invalid ID Number" << endl;
+                cout << "School ID Number: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else break;
+        }
+        
         cin.ignore();
 
         cout << "Student Name:" << endl;
