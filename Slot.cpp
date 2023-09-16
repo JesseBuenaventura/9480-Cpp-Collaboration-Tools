@@ -65,10 +65,16 @@ void reserveSlot(vector<Slot>& slots){
         getline(cin,studentName); //getline() reads a string from input
 
         //TO DO: Decide if number of hours nalang or Arrival Time nalang
-        //TO DO: Handle wrong inputs
-        cout << "Enter the Number of Hours:" << endl;
+        cout << "Enter the Number of Hours: ";
         int hours;
-        cin >> hours;
+        while (true) {
+            cin >> hours;
+            if (hours <= 0 || hours > 24) {
+                cout << "Invalid number of hours" << endl;
+                cout << "Enter the Number of Hours: ";
+                cin.ignore();
+            } else break;
+        }
         cin.ignore();
 
         cout << "Departure Time:" << endl;
