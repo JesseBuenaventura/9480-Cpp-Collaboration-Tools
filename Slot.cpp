@@ -11,13 +11,12 @@ struct Slot
 };
 
 vector<Slot> initializeSlots(int numberOfSlots) {
-    vector<Slot> slots;
+    vector<Slot> slots(numberOfSlots);
 
-    for(int i = 1; i <= numberOfSlots; i++) {
-        Slot newSlot;
-        newSlot.slotNumber = i;
-        newSlot.isAvailable = true;
-        slots.push_back(newSlot);
+    for(int i = 0; i < numberOfSlots; i++) {
+        slots[i] = {i + 1, true}; //used braced initializer to simplify code
+        //i+1 - slot numbers start from 1 and then increment by 1 for each slot
+        //true - initializes isAvailable member to true which indicates each slot is available
     }
     return slots;
 }
@@ -35,7 +34,7 @@ void viewAvailableSlots(const vector<Slot>& slots){
 }
 
 void reserveSlot(vector<Slot>& slots){
-    cout << "Enter Slot:" << endl;
+    cout << "Enter Slot: ";
     int slot;
     cin >> slot;
 
@@ -60,7 +59,7 @@ void reserveSlot(vector<Slot>& slots){
         
         cin.ignore();
 
-        cout << "Student Name:" << endl;
+        cout << "Student Name: ";
         string studentName;
         getline(cin,studentName); //getline() reads a string from input
 
@@ -77,7 +76,7 @@ void reserveSlot(vector<Slot>& slots){
         }
         cin.ignore();
 
-        cout << "Departure Time:" << endl;
+        cout << "Departure Time: ";
         string departure;
         getline(cin, departure); //getline() reads a string from input
 
