@@ -4,10 +4,17 @@
 #include <limits>
 using namespace std;
 
-struct Slot
-{
+struct Reservation {
+    int slotNumber;
+    int idNumber;
+    string studentName;
+    string departureTime;
+};
+
+struct Slot {
     int slotNumber; //stores slot number
-    bool isAvailable; //determins if slot is available or not
+    bool isAvailable; //determines if slot is available or not
+    Reservation reservation; // stores reservation details for the slot if it's reserved
 };
 
 vector<Slot> initializeSlots(int numberOfSlots) {
@@ -34,7 +41,7 @@ void viewAvailableSlots(const vector<Slot>& slots){
 }
 
 void reserveSlot(vector<Slot>& slots){
-    cout << "Enter Slot: ";
+    cout << "Enter Slot:" << endl;
     int slot;
     cin >> slot;
 
@@ -42,7 +49,6 @@ void reserveSlot(vector<Slot>& slots){
     if(!slots[slot - 1].isAvailable){
         cout << "Slot " << slot << " is already occupied. Please choose another slot." << endl;
     } else {
-
         // TO DO: Check if student id is valid 
         cout << "School ID Number: ";
         int idNumber;
@@ -59,11 +65,11 @@ void reserveSlot(vector<Slot>& slots){
         
         cin.ignore();
 
-        cout << "Student Name: ";
+        cout << "Student Name:" << endl;
         string studentName;
         getline(cin,studentName); //getline() reads a string from input
 
-        //TO DO: Decide if number of hours nalang or Arrival Time nalang
+        //TO DO: Decide if number of hours only or Arrival Time only
         cout << "Enter the Number of Hours: ";
         int hours;
         while (true) {
@@ -76,11 +82,17 @@ void reserveSlot(vector<Slot>& slots){
         }
         cin.ignore();
 
-        cout << "Departure Time: ";
+        cout << "Departure Time:" << endl;
         string departure;
         getline(cin, departure); //getline() reads a string from input
 
         slots[slot - 1].isAvailable = false; //slot # availability will become false after booking a slot
+
+        // Save the reservation details
+        slots[slot - 1].reservation.slotNumber = slot;
+        slots[slot - 1].reservation.idNumber = idNumber;
+        slots[slot - 1].reservation.studentName = studentName;
+        slots[slot - 1].reservation.departureTime = departure;
 
         //displays reservation info
         cout << "-----------------------------" << endl;
@@ -93,6 +105,29 @@ void reserveSlot(vector<Slot>& slots){
         cout << "-----------------------------" << endl;
     }
 }
+
+void viewAllReservations(const vector<Slot>& slots) {
+    bool foundReservation = false;
+
+    cout << "All Reservations: " << endl;
+
+    for(const Slot& slot : slots) {
+        if(!slot.isAvailable) { // if the slot is occupied, it has a reservation
+            foundReservation = true;
+            cout << "-----------------------------" << endl;
+            cout << "Slot Number: " << slot.slotNumber << endl;
+            cout << "ID Number: " << slot.reservation.idNumber << endl;
+            cout << "Name: " << slot.reservation.studentName << endl;
+            cout << "Time: " << slot.reservation.departureTime << endl;
+            cout << "-----------------------------" << endl;
+        }
+    }
+
+    if (!foundReservation) {
+        cout << "No reservations found." << endl;
+    }
+}
+
 
 int main(){
     string userName = "cool";
@@ -154,7 +189,7 @@ int choice;
         break;
 
         case 2:
-            cout << "View my Reservations" << endl;
+            viewAllReservations(slots);
             break;
         case 3: 
             cout << "Cancel Reservation" << endl;
@@ -170,5 +205,4 @@ int choice;
 
     return 0;
 }
-
 
