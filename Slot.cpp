@@ -17,6 +17,41 @@ struct Slot {
     Reservation reservation; // stores reservation details for the slot if it's reserved
 };
 
+bool login(int& idNumber, const string& password){
+int idNum;
+string pass;
+
+    cout << "Enter your ID Number: ";
+    cin >> idNum;
+
+
+    cout << "Enter your password: ";
+    cin >> pass;
+
+    if(idNum == idNumber && pass == password){
+        idNumber = idNum;
+        cout << "You've Successfully Login!" << endl;
+        return true;
+    } else {
+        cout << "Invalid ID Number or password. Please try again!" << endl;
+        return false;
+    }
+}
+// cin >> user;
+//     if (user == username){
+//         cout << "Enter your Password: ";
+//         cin >> pass;
+//         if (pass == password){
+//             cout << "Successfully Login!" << endl;
+//             return true;
+//         } else  {
+//             cout << "Incorrect Username or Password! Try Again!" << endl;
+//         }
+//     } else {
+//         cout << "Incorrect Username or Password! Try Again!" << endl;
+//     }
+//     return false;
+
 vector<Slot> initializeSlots(int numberOfSlots) {
     vector<Slot> slots(numberOfSlots);
 
@@ -40,69 +75,70 @@ void viewAvailableSlots(const vector<Slot>& slots){
     }
 }
 
-void reserveSlot(vector<Slot>& slots){
-    cout << "Enter Slot:" << endl;
+bool bookedIDNumber(const vector<Slot>& slots, int idNumber) {
+    for (const Slot& slot : slots) {
+        //check if slot is booked or not and if an IDNumber has already booked a slot
+        if (!slot.isAvailable && slot.reservation.idNumber == idNumber) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void reserveSlot(vector<Slot>& slots, int idNumber) {
+    cout << "Enter Slot: ";
     int slot;
     cin >> slot;
 
     // Checks if slot is already occupied
-    if(!slots[slot - 1].isAvailable){
+    if (!slots[slot - 1].isAvailable) {
         cout << "Slot " << slot << " is already occupied. Please choose another slot." << endl;
     } else {
-        // TO DO: Check if student id is valid 
-        cout << "School ID Number: ";
-        int idNumber;
-        while (true) {
-            cin >> idNumber;
-            if (!cin) {
-                cout << "Invalid ID Number" << endl;
-                cout << "School ID Number: ";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                continue;
-            } else break;
+        if(bookedIDNumber(slots, idNumber)){
+            cout << "You have already made a reservation." << endl;
+        } else {
+            cout << "Student Name: ";
+            string studentName;
+            cin.ignore();
+            getline(cin, studentName); // getline() reads a string from input
+
+            // TO DO: Decide if number of hours only or Arrival Time only
+            cout << "Enter the Number of Hours: ";
+            int hours;
+            while (true) {
+                cin >> hours;
+                if (hours <= 0 || hours > 24) {
+                    cout << "Invalid number of hours" << endl;
+                    cout << "Enter the Number of Hours: ";
+                    cin.ignore();
+                } else {
+                    break;
+                }
+            }
+            cin.ignore();
+
+            cout << "Departure Time: ";
+            string departure;
+            getline(cin, departure); // getline() reads a string from input
+
+            slots[slot - 1].isAvailable = false; // slot # availability will become false after booking a slot
+
+            // Save the reservation details
+            slots[slot - 1].reservation.slotNumber = slot;
+            slots[slot - 1].reservation.idNumber = idNumber;
+            slots[slot - 1].reservation.studentName = studentName;
+            slots[slot - 1].reservation.departureTime = departure;
+
+            // displays reservation info
+            cout << "-----------------------------" << endl;
+            cout << "Confirm Reservation" << endl;
+            cout << "Details:" << endl;
+            cout << "Slot Number: " << slot << endl;
+            cout << "ID Number: " << idNumber << endl;
+            cout << "Name: " << studentName << endl;
+            cout << "Time: " << departure << endl;
+            cout << "-----------------------------" << endl;
         }
-        
-        cin.ignore();
-
-        cout << "Student Name:" << endl;
-        string studentName;
-        getline(cin,studentName); //getline() reads a string from input
-
-        //TO DO: Decide if number of hours only or Arrival Time only
-        cout << "Enter the Number of Hours: ";
-        int hours;
-        while (true) {
-            cin >> hours;
-            if (hours <= 0 || hours > 24) {
-                cout << "Invalid number of hours" << endl;
-                cout << "Enter the Number of Hours: ";
-                cin.ignore();
-            } else break;
-        }
-        cin.ignore();
-
-        cout << "Departure Time:" << endl;
-        string departure;
-        getline(cin, departure); //getline() reads a string from input
-
-        slots[slot - 1].isAvailable = false; //slot # availability will become false after booking a slot
-
-        // Save the reservation details
-        slots[slot - 1].reservation.slotNumber = slot;
-        slots[slot - 1].reservation.idNumber = idNumber;
-        slots[slot - 1].reservation.studentName = studentName;
-        slots[slot - 1].reservation.departureTime = departure;
-
-        //displays reservation info
-        cout << "-----------------------------" << endl;
-        cout << "Confirm Reservation" << endl;
-        cout << "Details:" << endl;
-        cout << "Slot Number: " << slot << endl;
-        cout << "ID Number: " << idNumber << endl;
-        cout << "Name: " << studentName << endl;
-        cout << "Time: " << departure << endl;
-        cout << "-----------------------------" << endl;
     }
 }
 
@@ -130,25 +166,29 @@ void viewAllReservations(const vector<Slot>& slots) {
 
 
 int main(){
-    string userName = "cool";
-    string password = "mo";
-    string user;
-    string pass;
+    int idNumber = 1234567;
+    string password = "wisdom";
     bool loggedIn = false;
+    bool hasReserved = false;
 
     cout << "Hello, Welcome to ParkRes!" << endl;
-    cout << "Enter your Username: ";
-    cin >> user;
-    if (user == userName){
-        cout << "Enter your Password: ";
-        cin >> pass;
-        if (pass == password){
-            cout << "Successfully Login!" << endl;
-            loggedIn = true;
-        } else  {
-            cout << "INCORRECT Username or Password! Try Again!" << endl;
-        }
+    loggedIn = login(idNumber,password);
+
+    if(!loggedIn){
+        return 1;
     }
+    // cout << "Enter your Username: ";
+    // cin >> user;
+    // if (user == userName){
+    //     cout << "Enter your Password: ";
+    //     cin >> pass;
+    //     if (pass == password){
+    //         cout << "Successfully Login!" << endl;
+    //         loggedIn = true;
+    //     } else  {
+    //         cout << "INCORRECT Username or Password! Try Again!" << endl;
+    //     }
+    // }
 
 vector<Slot> slots = initializeSlots(10);
 int choice;
@@ -168,24 +208,29 @@ int choice;
             cout << "View Available Slots" << endl;
             viewAvailableSlots(slots);
 
-            char reserveChoice;
-            do{
-                cout << "Do you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
-                cin >> reserveChoice;
-            
-            switch(reserveChoice){
-            case 'y':
-            case 'Y':
-                reserveSlot(slots);
-                break;
-            case 'n':
-            case 'N':
-                break;
-            default:
-                cout << "Invalid choice." << endl;
-                break;
+            if (!hasReserved){
+                char reserveChoice;
+                do{
+                    cout << "Do you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
+                    cin >> reserveChoice;
+                    
+                    switch(reserveChoice){
+                    case 'y':
+                    case 'Y':
+                        reserveSlot(slots, idNumber);
+                        hasReserved = true;
+                        break;
+                    case 'n':
+                    case 'N':
+                        break;
+                    default:
+                        cout << "Invalid choice." << endl;
+                        break;
+                    }
+                } while (reserveChoice != 'n' && reserveChoice != 'N');
+            } else {
+                cout << "You already made a reservation." << endl;
             }
-        } while (reserveChoice != 'n' && reserveChoice != 'N');
         break;
 
         case 2:
