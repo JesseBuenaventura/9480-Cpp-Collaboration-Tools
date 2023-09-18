@@ -39,23 +39,6 @@ bool login(int& idNumber, const string& password){
     }
     return true;
 }
-    
-
-
-// cin >> user;
-//     if (user == username){
-//         cout << "Enter your Password: ";
-//         cin >> pass;
-//         if (pass == password){
-//             cout << "Successfully Login!" << endl;
-//             return true;
-//         } else  {
-//             cout << "Incorrect Username or Password! Try Again!" << endl;
-//         }
-//     } else {
-//         cout << "Incorrect Username or Password! Try Again!" << endl;
-//     }
-//     return false;
 
 vector<Slot> initializeSlots(int numberOfSlots) {
     vector<Slot> slots(numberOfSlots);
@@ -180,7 +163,6 @@ bool cancelReservation (vector<Slot>& slots, int idNumber) {
     return false;
 }
 
-
 int main(){
     int idNumber = 1234567;
     string password = "wisdom";
@@ -193,18 +175,6 @@ int main(){
     if(!loggedIn){
         return 1;
     }
-    // cout << "Enter your Username: ";
-    // cin >> user;
-    // if (user == userName){
-    //     cout << "Enter your Password: ";
-    //     cin >> pass;
-    //     if (pass == password){
-    //         cout << "Successfully Login!" << endl;
-    //         loggedIn = true;
-    //     } else  {
-    //         cout << "INCORRECT Username or Password! Try Again!" << endl;
-    //     }
-    // }
 
 vector<Slot> slots = initializeSlots(10);
 int choice;
@@ -224,13 +194,13 @@ int choice;
             cout << "View Available Slots" << endl;
             viewAvailableSlots(slots);
 
-            if (!hasReserved){
-                char reserveChoice;
-                do{
+            char reserveChoice;
+            do {
+                if (!hasReserved) {
                     cout << "Do you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
                     cin >> reserveChoice;
-                    
-                    switch(reserveChoice){
+            
+                switch (reserveChoice) {
                     case 'y':
                     case 'Y':
                         reserveSlot(slots, idNumber);
@@ -242,12 +212,13 @@ int choice;
                     default:
                         cout << "Invalid choice." << endl;
                         break;
-                    }
-                } while (reserveChoice != 'n' && reserveChoice != 'N');
+                }
             } else {
                 cout << "You already made a reservation." << endl;
-            }
-        break;
+                break;
+        }
+    } while (reserveChoice != 'n' && reserveChoice != 'N');
+    break;
 
         case 2:
             viewAllReservations(slots);
