@@ -164,6 +164,17 @@ void viewAllReservations(const vector<Slot>& slots) {
     }
 }
 
+bool cancelReservation (vector<Slot>& slots, int idNumber) {
+    for (Slot& slot : slots) {
+        if (slot.reservation.idNumber == idNumber) {
+            slot.isAvailable = true;
+            slot.reservation.idNumber = 0;
+            return true;
+        } 
+    }
+    return false;
+}
+
 
 int main(){
     int idNumber = 1234567;
@@ -236,8 +247,13 @@ int choice;
         case 2:
             viewAllReservations(slots);
             break;
-        case 3: 
-            cout << "Cancel Reservation" << endl;
+        case 3:
+            if (cancelReservation(slots, idNumber)) {
+                hasReserved = false;
+                cout << "Reservation has been Cancelled" << endl;
+            } else {
+                cout << "No reservations found" << endl;
+            }
             break;
         case 4:
             cout << "Logging Out" << endl;
