@@ -11,7 +11,7 @@ struct Reservation {
     int slotNumber;
     int idNumber;
     string studentName;
-    string departureTime;
+    int hours;
 };
 
 /**
@@ -125,9 +125,9 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
             }
             cin.ignore();
 
-            cout << "Departure Time: ";
-            string departure;
-            getline(cin, departure); // getline() reads a string from input
+            // cout << "Departure Time: ";
+            // string departure;
+            // getline(cin, departure); // getline() reads a string from input
 
             slots[slot - 1].isAvailable = false; // slot # availability will become false after booking a slot
 
@@ -135,16 +135,16 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
             slots[slot - 1].reservation.slotNumber = slot;
             slots[slot - 1].reservation.idNumber = idNumber;
             slots[slot - 1].reservation.studentName = studentName;
-            slots[slot - 1].reservation.departureTime = departure;
+            slots[slot - 1].reservation.hours = hours;
 
             // displays reservation info
-            cout << "-----------------------------" << endl;
+            cout << "\n-----------------------------" << endl;
             cout << "Confirm Reservation" << endl;
             cout << "Details:" << endl;
             cout << "Slot Number: " << slot << endl;
             cout << "ID Number: " << idNumber << endl;
             cout << "Name: " << studentName << endl;
-            cout << "Time: " << departure << endl;
+            cout << "Hours: " << hours << endl;
             cout << "-----------------------------" << endl;
         }
     }
@@ -156,7 +156,7 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
 void viewReservation(const vector<Slot>& slots) {
     bool foundReservation = false;
 
-    cout << "Reservation: " << endl;
+    cout << "\nReservation: " << endl;
 
     for(const Slot& slot : slots) {
         if(!slot.isAvailable) { // if the slot is occupied, it has a reservation
@@ -165,7 +165,7 @@ void viewReservation(const vector<Slot>& slots) {
             cout << "Slot Number: " << slot.slotNumber << endl;
             cout << "ID Number: " << slot.reservation.idNumber << endl;
             cout << "Name: " << slot.reservation.studentName << endl;
-            cout << "Time: " << slot.reservation.departureTime << endl;
+            cout << "Time: " << slot.reservation.hours << endl;
             cout << "-----------------------------" << endl;
         }
     }
@@ -243,7 +243,7 @@ int main(){
                         break;
                 }
             } else {
-                cout << "You already made a reservation." << endl;
+                // cout << "You already made a reservation." << endl;
                 break;
         }
     } while (reserveChoice != 'n' && reserveChoice != 'N');
@@ -271,4 +271,3 @@ int main(){
 
     return 0;
 }
-
