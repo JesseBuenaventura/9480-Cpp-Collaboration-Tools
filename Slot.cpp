@@ -4,6 +4,9 @@
 #include <limits>
 using namespace std;
 
+/**
+ * Structure that contains the reservation details of the user
+*/
 struct Reservation {
     int slotNumber;
     int idNumber;
@@ -11,12 +14,18 @@ struct Reservation {
     string departureTime;
 };
 
+/**
+ * Structure that contains the details of a slot
+*/
 struct Slot {
     int slotNumber; //stores slot number
     bool isAvailable; //determines if slot is available or not
     Reservation reservation; // stores reservation details for the slot if it's reserved
 };
 
+/**
+ * Function for the user to login into the program
+*/
 bool login(int& idNumber, const string& password){
 int idNum;
 string pass;
@@ -37,21 +46,10 @@ string pass;
         return false;
     }
 }
-// cin >> user;
-//     if (user == username){
-//         cout << "Enter your Password: ";
-//         cin >> pass;
-//         if (pass == password){
-//             cout << "Successfully Login!" << endl;
-//             return true;
-//         } else  {
-//             cout << "Incorrect Username or Password! Try Again!" << endl;
-//         }
-//     } else {
-//         cout << "Incorrect Username or Password! Try Again!" << endl;
-//     }
-//     return false;
 
+/**
+ * Function to initialize the slots
+*/
 vector<Slot> initializeSlots(int numberOfSlots) {
     vector<Slot> slots(numberOfSlots);
 
@@ -63,6 +61,9 @@ vector<Slot> initializeSlots(int numberOfSlots) {
     return slots;
 }
 
+/**
+ * Function to display the available slots
+*/
 void viewAvailableSlots(const vector<Slot>& slots){
     cout << "List of Available slots: " << endl;
 
@@ -75,9 +76,11 @@ void viewAvailableSlots(const vector<Slot>& slots){
     }
 }
 
+/**
+ * Function to check if slot is booked or not and if an IDNumber has already booked a slot
+*/
 bool bookedIDNumber(const vector<Slot>& slots, int idNumber) {
     for (const Slot& slot : slots) {
-        //check if slot is booked or not and if an IDNumber has already booked a slot
         if (!slot.isAvailable && slot.reservation.idNumber == idNumber) {
             return true;
         }
@@ -85,6 +88,9 @@ bool bookedIDNumber(const vector<Slot>& slots, int idNumber) {
     return false;
 }
 
+/**
+ * Function that enables the user to reserve a slot
+*/
 void reserveSlot(vector<Slot>& slots, int idNumber) {
     cout << "Enter Slot: ";
     int slot;
@@ -142,10 +148,13 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
     }
 }
 
-void viewAllReservations(const vector<Slot>& slots) {
+/**
+ * Function to display the reservation details of the user
+*/
+void viewReservation(const vector<Slot>& slots) {
     bool foundReservation = false;
 
-    cout << "All Reservations: " << endl;
+    cout << "Reservation: " << endl;
 
     for(const Slot& slot : slots) {
         if(!slot.isAvailable) { // if the slot is occupied, it has a reservation
@@ -164,6 +173,9 @@ void viewAllReservations(const vector<Slot>& slots) {
     }
 }
 
+/**
+ * Function that allows a user to cancel their reservation
+*/
 bool cancelReservation (vector<Slot>& slots, int idNumber) {
     for (Slot& slot : slots) {
         if (slot.reservation.idNumber == idNumber) {
@@ -175,7 +187,9 @@ bool cancelReservation (vector<Slot>& slots, int idNumber) {
     return false;
 }
 
-
+/**
+ * Main Function
+*/
 int main(){
     int idNumber = 1234567;
     string password = "wisdom";
@@ -188,21 +202,9 @@ int main(){
     if(!loggedIn){
         return 1;
     }
-    // cout << "Enter your Username: ";
-    // cin >> user;
-    // if (user == userName){
-    //     cout << "Enter your Password: ";
-    //     cin >> pass;
-    //     if (pass == password){
-    //         cout << "Successfully Login!" << endl;
-    //         loggedIn = true;
-    //     } else  {
-    //         cout << "INCORRECT Username or Password! Try Again!" << endl;
-    //     }
-    // }
 
-vector<Slot> slots = initializeSlots(10);
-int choice;
+    vector<Slot> slots = initializeSlots(10);
+    int choice;
 
     while(loggedIn) {
         cout << "\n----Choose an option----" << endl;
@@ -245,7 +247,7 @@ int choice;
         break;
 
         case 2:
-            viewAllReservations(slots);
+            viewReservation(slots);
             break;
         case 3:
             if (cancelReservation(slots, idNumber)) {
