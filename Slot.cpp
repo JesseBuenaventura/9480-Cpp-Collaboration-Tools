@@ -40,7 +40,7 @@ bool login(int& idNumber, const string& password){
 
         if(idNum == idNumber && pass == password) {
             idNumber = idNum;
-            cout << "You've Successfully Login!" << endl;
+            cout << "You've Successfully Logged in!" << endl;
             loggedIn = true;
         } else {
             cout << "Invalid ID Number or password. Please try again!" << endl;
@@ -111,11 +111,11 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
             getline(cin, studentName); // getline() reads a string from input
 
             // TO DO: Decide if number of hours only or Arrival Time only
-            cout << "Enter the Number of Hours: ";
+            cout << "Enter the Number of Hours (up to 6 hours only): ";
             int hours;
             while (true) {
                 cin >> hours;
-                if (hours <= 0 || hours > 24) {
+                if (hours <= 0 || hours > 6) {
                     cout << "Invalid number of hours" << endl;
                     cout << "Enter the Number of Hours: ";
                     cin.ignore();
