@@ -27,24 +27,26 @@ struct Slot {
  * Function for the user to login into the program
 */
 bool login(int& idNumber, const string& password){
-int idNum;
-string pass;
+    int idNum;
+    string pass;
+    bool loggedIn = false;
 
-    cout << "Enter your ID Number: ";
-    cin >> idNum;
+    while (!loggedIn){
+        cout << "Enter your ID Number: ";
+        cin >> idNum;
 
+        cout << "Enter your password: ";
+        cin >> pass;
 
-    cout << "Enter your password: ";
-    cin >> pass;
-
-    if(idNum == idNumber && pass == password){
-        idNumber = idNum;
-        cout << "You've Successfully Login!" << endl;
-        return true;
-    } else {
-        cout << "Invalid ID Number or password. Please try again!" << endl;
-        return false;
+        if(idNum == idNumber && pass == password) {
+            idNumber = idNum;
+            cout << "You've Successfully Login!" << endl;
+            loggedIn = true;
+        } else {
+            cout << "Invalid ID Number or password. Please try again!" << endl;
+        }
     }
+    return true;
 }
 
 /**
@@ -221,13 +223,13 @@ int main(){
             cout << "View Available Slots" << endl;
             viewAvailableSlots(slots);
 
-            if (!hasReserved){
-                char reserveChoice;
-                do{
+            char reserveChoice;
+            do {
+                if (!hasReserved) {
                     cout << "Do you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
                     cin >> reserveChoice;
-                    
-                    switch(reserveChoice){
+            
+                switch (reserveChoice) {
                     case 'y':
                     case 'Y':
                         reserveSlot(slots, idNumber);
@@ -239,12 +241,13 @@ int main(){
                     default:
                         cout << "Invalid choice." << endl;
                         break;
-                    }
-                } while (reserveChoice != 'n' && reserveChoice != 'N');
+                }
             } else {
                 cout << "You already made a reservation." << endl;
-            }
-        break;
+                break;
+        }
+    } while (reserveChoice != 'n' && reserveChoice != 'N');
+    break;
 
         case 2:
             viewReservation(slots);
