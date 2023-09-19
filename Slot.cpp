@@ -110,7 +110,6 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
             cin.ignore();
             getline(cin, studentName); // getline() reads a string from input
 
-            // TO DO: Decide if number of hours only or Arrival Time only
             cout << "Enter the Number of Hours (up to 6 hours only): ";
             int hours;
             while (true) {
@@ -124,10 +123,6 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
                 }
             }
             cin.ignore();
-
-            // cout << "Departure Time: ";
-            // string departure;
-            // getline(cin, departure); // getline() reads a string from input
 
             slots[slot - 1].isAvailable = false; // slot # availability will become false after booking a slot
 
@@ -226,7 +221,7 @@ int main(){
             char reserveChoice;
             do {
                 if (!hasReserved) {
-                    cout << "Do you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
+                    cout << "\nDo you want to reserve a slot? (Input Y/y for Yes, N/n for No): ";
                     cin >> reserveChoice;
             
                 switch (reserveChoice) {
@@ -243,7 +238,6 @@ int main(){
                         break;
                 }
             } else {
-                // cout << "You already made a reservation." << endl;
                 break;
         }
     } while (reserveChoice != 'n' && reserveChoice != 'N');
