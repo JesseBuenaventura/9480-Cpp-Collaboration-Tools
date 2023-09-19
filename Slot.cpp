@@ -105,10 +105,25 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
         if(bookedIDNumber(slots, idNumber)){
             cout << "You have already made a reservation." << endl;
         } else {
-            cout << "Student Name: ";
             string studentName;
+            bool validName = false;
+            
+            while (!validName){
+            cout << "Student Name: ";
             cin.ignore();
             getline(cin, studentName); // getline() reads a string from input
+
+            validName = true;
+            for(char character : studentName){ //iterates through each character
+                if(isdigit(character)){ //checks if character is a digit
+                    validName= false;
+                    break;
+                    }
+                }
+                if(!validName){
+                    cout << "Invalid input. Student name should not contain any numbers." << endl;
+                }
+            }
 
             cout << "Enter the Number of Hours (up to 6 hours only): ";
             int hours;
@@ -206,7 +221,7 @@ int main(){
     while(loggedIn) {
         cout << "\n----Choose an option----" << endl;
         cout << "1. View Available Slots" << endl;
-        cout << "2. View my Reservations" << endl;
+        cout << "2. View my Reservation" << endl;
         cout << "3. Cancel Reservation" << endl;
         cout << "4. Logout" << endl;
         cout << "Enter your choice: ";
