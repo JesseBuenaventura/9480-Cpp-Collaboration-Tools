@@ -203,7 +203,7 @@ bool cancelReservation (vector<Slot>& slots, int idNumber) {
  * Main Function
 */
 int main(){
-    int idNumber = 1234567;
+    int idNumber = 12345678;
     string password = "wisdom";
     bool loggedIn = false;
     bool hasReserved = false;
