@@ -125,11 +125,11 @@ void reserveSlot(vector<Slot>& slots, int idNumber) {
                 }
             }
 
-            cout << "Enter the Number of Hours (up to 6 hours only): ";
+            cout << "Enter the Number of Hours: ";
             int hours;
             while (true) {
                 cin >> hours;
-                if (hours <= 0 || hours > 6) {
+                if (hours <= 0 || hours > 24) {
                     cout << "Invalid number of hours" << endl;
                     cout << "Enter the Number of Hours: ";
                     cin.ignore();
