@@ -53,9 +53,12 @@ vector<Slot> initializeSlots(int numberOfSlots) {
     vector<Slot> slots(numberOfSlots);
 
     for(int i = 0; i < numberOfSlots; i++) {
-        slots[i] = {i + 1, true}; //used braced initializer to simplify code
-        //i+1 - slot numbers start from 1 and then increment by 1 for each slot
-        //true - initializes isAvailable member to true which indicates each slot is available
+        Slot newSlot;
+        newSlot.slotNumber = i + 1;
+        newSlot.isAvailable = true;
+        newSlot.reservation = {0, 0, "", 0}; // Initialize reservation with default values
+
+        slots[i] = newSlot;
     }
     return slots;
 }
