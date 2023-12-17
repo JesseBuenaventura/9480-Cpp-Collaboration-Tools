@@ -26,27 +26,24 @@ struct Slot {
 /**
  * Function for the user to login into the program
 */
-bool login(int& idNumber, const string& password){
-    int idNum;
-    string pass;
-    bool loggedIn = false;
-
-    while (!loggedIn){
+bool login(int &idNumber, const string &password) {
+    while (true) {
         cout << "Enter your ID Number: ";
-        cin >> idNum;
+        int inputIdNumber;
+        cin >> inputIdNumber;
 
         cout << "Enter your password: ";
-        cin >> pass;
+        string inputPassword;
+        cin >> inputPassword;
 
-        if(idNum == idNumber && pass == password) {
-            idNumber = idNum;
-            cout << "You've Successfully Logged in!" << endl;
-            loggedIn = true;
+        if (inputIdNumber == idNumber && inputPassword == password) {
+            idNumber = inputIdNumber;
+            cout << "You have successfully logged in!" << endl;
+            return true;
         } else {
             cout << "Invalid ID Number or password. Please try again!" << endl;
         }
     }
-    return true;
 }
 
 /**
