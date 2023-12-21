@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/helae/OneDrive/Desktop/AppDev/c",
-      "program": "c:/Users/helae/OneDrive/Desktop/AppDev/c/build/Debug/outDebug",
+      "cwd": "c:/Users/helae/OneDrive/Desktop/app dev/9480-Cpp-Collaboration-Tools",
+      "program": "c:/Users/helae/OneDrive/Desktop/app dev/9480-Cpp-Collaboration-Tools/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
